@@ -1,8 +1,7 @@
 package handler
 
 import (
-	"fmt"
-
+	"github.com/bytebytebug/newf/service"
 	"github.com/spf13/cobra"
 )
 
@@ -13,8 +12,14 @@ func MakeFileFlags(cmd *cobra.Command) {
 func MakeFile(cmd *cobra.Command, args []string) error {
 	base, err := cmd.Flags().GetString("at")
 
-	fmt.Println(base)
-	fmt.Println(args)
+	if err != nil {
+		return err
+	}
 
-	return err
+	makeFileService, err := service.CreateMakeFileService()
+	if err != nil {
+		return err
+	}
+
+	return makeFileService.Exec(base, args)
 }
