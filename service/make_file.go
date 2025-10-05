@@ -1,5 +1,10 @@
 package service
 
+import (
+	"github.com/bytebytebug/newf/parser"
+	"github.com/bytebytebug/newf/utils"
+)
+
 type InputParser interface {
 	Parse(base string, files []string) ([]string, error)
 }
@@ -19,7 +24,10 @@ type OptsValues struct {
 }
 
 func DefaultOptValues() *OptsValues {
-	return &OptsValues{}
+	return &OptsValues{
+		InputParser: parser.NewMakeFileInputParser(),
+		FS:          utils.CreateFs(),
+	}
 }
 
 type Opt func(v *OptsValues)
